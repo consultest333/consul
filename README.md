@@ -34,36 +34,74 @@ Check the ongoing documentation at [https://docs.consulproject.org](https://docs
 
 You can access the main website of the project at [http://consulproject.org](http://consulproject.org) where you can find documentation about the use of the platform, videos, and links to the community space.
 
-## Configuration for development and test environments
+## Configuration for development and production environments:
 
-**NOTE**: For more detailed instructions check the [docs](https://docs.consulproject.org)
+Install docker engine:
+- Update the apt package index and install packages to allow apt to use a repository over HTTPS:
+´´´bash
+ sudo apt-get update
 
-Prerequisites: install git, Ruby 2.7.6, CMake, pkg-config, shared-mime-info, Node.js and PostgreSQL (>=9.5).
+ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+´´´
 
-```bash
-git clone https://github.com/consul/consul.git
+- Add Docker’s official GPG key:
+´´´bash
+sudo mkdir -p /etc/apt/keyrings
+ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+´´´
+
+- Use the following command to set up the repository:
+´´´bash
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+´´´
+
+- Update the apt package index, and install the latest version of Docker Engine, containerd, and Docker Compose:
+´´´bash
+sudo apt-get update 
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+´´´
+
+*https://docs.docker.com/engine/install/
+*https://docs.docker.com/engine/install/ubuntu/
+
+- Install docker-compose:
+´´´bash
+sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.15.0/docker-compose-$(uname -s)-$(uname -m)"
+sudo chmod +x /usr/local/bin/docker-compose
+´´´
+
+- Clone the repo your computer and enter the folder:
+´´´bash
+git clone https://github.com/consultest333/consul.git
 cd consul
-bundle install
-cp config/database.yml.example config/database.yml
+´´´
+
+- Then lets create our secrets and database config files based on examples:
+´´´bash
 cp config/secrets.yml.example config/secrets.yml
-bin/rake db:create
-bin/rake db:migrate
-bin/rake db:dev_seed
-RAILS_ENV=test rake db:setup
-```
+cp config/database-docker.yml.example config/database.yml
+´´´
 
-Run the app locally:
+- Download init volumes with wetransfer, unpack the files and copy them to the target directory:
+https://wetransfer.com/downloads/3a7aa42cd7ac21275b3d73e89ec40a6620220803085706/d0c3e4dae1567ec1a98c1574100a6b1920220803085723/0feec7?utm_campaign=WT_email_tracking&utm_content=general&utm_medium=download_button&utm_source=notify_recipient_email
+´´´bash
+cd ~/Downloads
+tar xfvz consul_arch.tar.gz
+cd conusl_vols/volumes
+sudo cp -r consul_bundle/ /var/lib/docker/volumes
+sudo cp -r consul_db_data/ /var/lib/docker/volumes
+´´´
 
-```bash
-bin/rails s
-```
+- Start application with docker-compose:
+sudo POSTGRES_PASSWORD=consul docker-compose up
 
-Run the tests with:
-
-```bash
-bin/rspec
-```
-
+## Frontend login credentials:
 You can use the default admin user from the seeds file:
 
  **user:** admin@consul.dev
@@ -73,10 +111,6 @@ But for some actions like voting, you will need a verified user, the seeds file 
 
  **user:** verified@consul.dev
  **pass:** 12345678
-
-## Configuration for production environments
-
-See [installer](https://github.com/consul/installer)
 
 ## Current state
 
