@@ -76,7 +76,7 @@ sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-- Clone the repo your computer and enter the folder:
+- Clone the repo to your computer and enter the consul folder:
 ```bash
 git clone https://github.com/consultest333/consul.git
 cd consul
@@ -88,12 +88,12 @@ cp config/secrets.yml.example config/secrets.yml
 cp config/database-docker.yml.example config/database.yml
 ```
 
-- Download init volumes with wetransfer, unpack the files and copy them to the target directory:
-https://wetransfer.com/downloads/3a7aa42cd7ac21275b3d73e89ec40a6620220803085706/d0c3e4dae1567ec1a98c1574100a6b1920220803085723/0feec7?utm_campaign=WT_email_tracking&utm_content=general&utm_medium=download_button&utm_source=notify_recipient_email
+- Download init volumes at filetransfer.io, unpack the files and copy them to the target directory:
+https://filetransfer.io/data-package/ywmvOuww#link
 ```bash
 cd ~/Downloads
-tar xfvz consul_arch.tar.gz
-cd conusl_vols/volumes
+tar xfvz consul_vols.tar.gz
+cd consul_init_vols/volumes
 sudo cp -r consul_bundle/ /var/lib/docker/volumes
 sudo cp -r consul_db_data/ /var/lib/docker/volumes
 ```
