@@ -16,9 +16,9 @@ services:
   app:
 
     # use the Dockerfile next to this file
-    build: .
+#    build: .
 
-#    image: "tu41330/consulrepo:consul"
+    image: "tu41330/consulrepo:consul"
 
     # rely on the RAILS_ENV value of the host machine
     # environment:

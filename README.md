@@ -89,7 +89,7 @@ cp config/database-docker.yml.example config/database.yml
 ```
 
 - Download init volumes at filetransfer.io, unpack the files and copy them to the target directory:
-https://filetransfer.io/data-package/ywmvOuww#link
+https://filetransfer.io/data-package/JdxzfutM#link
 ```bash
 cd ~/Downloads
 tar xfvz consul_vols.tar.gz
