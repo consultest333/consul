@@ -88,16 +88,12 @@ cp config/secrets.yml.example config/secrets.yml
 cp config/database-docker.yml.example config/database.yml
 ```
 
-- Download init volumes at filetransfer.io, unpack the files and copy them to the target directory (each link has a download limit of 50):
-https://filetransfer.io/data-package/kIqMR5SM#link
-https://filetransfer.io/data-package/LttSVAfs#link
+### Build the database volume 
 ```bash
-cd ~/Downloads
-tar xfvz consul_vols.tar.gz
-cd consul_init_vols/volumes
-sudo cp -r consul_bundle/ /var/lib/docker/volumes
-sudo cp -r consul_db_data/ /var/lib/docker/volumes
+./build_db.sh
+docker compose down
 ```
+This will create the volume `consul_db_data` filed with the default data.
 
 - Start application with docker-compose:
 ```bash
